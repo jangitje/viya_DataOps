@@ -23,8 +23,8 @@ pipeline {
                 sh '''
                     rm -rf deployed
                     mkdir deployed
-                    cat sas_global_symbols >> deployed/extr_main.sas
-                    cat programs/extr_main.sas >> deployed/extr_main.sas
+                    cat sas_global_symbols >> deployed/run_main.sas
+                    cat programs/extr_main.sas >> deployed/run_main.sas
     
                     temp_dir=$(uuidgen)
                     mkdir $temp_dir
@@ -40,9 +40,9 @@ pipeline {
             steps {
                 sh """
                 /root/sas-viya --insecure auth login -u sasdemo -p $cred_viya_password
-                /root/sas-viya --insecure batch jobs submit-pgm --rem-pgm-path ${params.target}/deployed/extr_main.sas --context default --wait-log-list --watch-output
+                /root/sas-viya --insecure batch jobs submit-pgm --rem-pgm-path ${params.target}/deployed/run_main.sas --context default --wait-log-list --watch-output
                 echo 'SAS output'
-                cat extr_main.lst
+                cat run_main.lst
                 """ 
             }
         }
