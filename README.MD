@@ -146,12 +146,45 @@ When connecting to your remote server with VS Code SSH update this configuration
 
 Once connected update your SAS Extension profile:
 -   VS Code, Ctrl + shift + P (Command Palette): SAS: Update Connection Profile
+  
+## Install and configure SAS-VIYA CLI on remote
+The SAS Viya CLI is used to run SAS jobs in batch using the Jenkins tool.  
+How to install and configure the SAS-VIYA CLI:  
+https://go.documentation.sas.com/doc/en/sasadmincdc/v_035/calcli/n01xwtcatlinzrn1gztsglukb34a.htm  
+
+For RACE image you don't need to worry about certificates.  
+Just get the tar and untar in your folder of choice:
+```
+tar -xvzf /CLI-directory/sas-viya-cli-version-download-linux.tgz  
+```  
+From the directory, make sure that the Execute permission is set:
+```
+chmod +x sas-viya
+```
+
+Next you have to install plugins.  For this purpose we only need batch plugin:
+```
+sas-viya plugins
+sas-viya plugins list
+sas-viya plugins list-repo-plugins
+sas-viya plugins install --repo SAS batch
+```
+
+Next create a profile:
+```
+sas-viya profile init
+```
+
+Plugin and profile is stored in user folder, in case of RACE this is:
+-   /root/.sas/  
+
+## Install docker-compose
+https://docs.docker.com/compose/install/
+
+## Create customized docker Jenkins image
 
 
-
-
-
-
+## Set credentials in Jenkins
 
 
 
