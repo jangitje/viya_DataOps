@@ -24,7 +24,7 @@ pipeline {
                     rm -rf deployed
                     mkdir deployed
                     cat sas_global_symbols >> deployed/run_main.sas
-                    cat programs/extr_main.sas >> deployed/run_main.sas
+                    cat programs/run_main.sas >> deployed/run_main.sas
     
                     temp_dir=$(uuidgen)
                     mkdir $temp_dir
