@@ -33,7 +33,8 @@ You should be connected to REMOTE.
   
 To get rid of userid/password everytime you connect, you can provide an SSH key pair.
 
-In terminal:  
+In terminal:
+
     ssh-keygen -t rsa -b 4096
 
 Just give ENTER (no secret, no special name).  
