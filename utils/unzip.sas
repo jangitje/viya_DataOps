@@ -9,9 +9,16 @@
  */
 options source source2 mprint mlogic;
 
-%let zipfile = target.zip;
-%let target = /data/sascode/deployments/tno;
+%macro params_interactive; 
+%global batch target target_data;
+%if "&batch" ne "1" %then %do; 
+  %let target = /sascode/deployments/viya_dataOps;
+  %let target_data = /sascode/deployments/viya_dataOps;
+%end;
+%mend;
+%params_interactive; 
 
+%let zipfile = target.zip;
 
 /**
   List all current files in folder recursively
