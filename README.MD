@@ -179,12 +179,90 @@ Plugin and profile is stored in user folder, in case of RACE this is:
 -   /root/.sas/  
 
 ## Install docker-compose
+I assume you already have Docker installed, if not you have to install Docker.
+With DOcker installed you can install Docker-compose.
 https://docs.docker.com/compose/install/
 
 ## Create customized docker Jenkins image
+We need a slightly modified Jenkins image, since we are going to use ZIP and the SAS CLI on the Jenkins image.
+Create directories:
+```
+mkdir /opt/jenkins
+mkdir /opt/jenkins/home
+mkdir /opt/jenkins_plus
+cp your_cli_location/sas-viya /opt/jenkins_plus
+cp /root/.sas -R /opt/jenkins_plus
+touch /opt/jenkins/jenkins_plus/Dockerfile
+```
+Make sure the config.json file in the .sas folder points to the correct RACE server.
+
+Content of Dockerfile: 
+```
+FROM jenkins/jenkins
+USER root
+
+RUN  apt-get update  
+RUN  apt-get install zip  
+RUN  apt-get install uuid-runtime  
+COPY .sas/ /root/.sas/  
+COPY sas-viya /root  
+```
+
+Next prepare docker compose file
+  
+```  
+touch /opt/jenkins/docker-compose.yml
+```
+
+Content of Docker-compose file:
+```
+version: '3'
+services:
+  jenkins:
+    container_name: jenkins_plus
+    image: jenkins_plus
+    ports:
+      - "8080:8080"
+    build:
+      context: jenkins_plus
+    volumes:
+      - "$PWD/jenkins_home:/var/jenkins_home"
+    networks:
+      - net
+networks:
+  net:
+```
+You should be now able to build the customized Jenkins image:
+```
+cd /opt/jenkins
+docker-compose build
+```
+Finally you can start the image:
+```
+docker-compose up -d
+```
+After a few moments you can start the Jenkins applicatie. In the client image:
+```
+http://sasserver.demo.sas.com:8080/
+```
+You will have to provide the Jenkins admin password.
+You can get the password from the initial log:
+```
+docker logs jenkins_plus
+```
 
 
-## Set credentials in Jenkins
+## Configure Jenkins
+
+Set up credentials  
+
+
+Setup pipeline project  
+
+
+## Required updates when working with new RACE image 
+
+
 
 
 
