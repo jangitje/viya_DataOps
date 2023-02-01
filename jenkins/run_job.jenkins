@@ -39,7 +39,7 @@ pipeline {
         stage('Run Hello World') {
             steps {
                 sh '/root/sas-viya --insecure auth login -u sasdemo -p ${cred_viya_password}'
-                sh '/root/sas-viya --insecure batch jobs submit-pgm --rem-pgm-path ${params.target}/deployed/run_main.sas --context default --wait-log-list --watch-output'
+                sh "/root/sas-viya --insecure batch jobs submit-pgm --rem-pgm-path ${params.target}/deployed/run_main.sas --context default --wait-log-list --watch-output"
                 sh 'echo SAS output'
                 sh 'cat run_main.lst'
             }

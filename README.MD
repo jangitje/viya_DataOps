@@ -287,6 +287,35 @@ If successfully the build Stage View will be green.
 After running the first time and making a successfull connection to GIT you will notice that the pipeline has changed. This is because Jenkins will take the properies from the Jenkins file in the repository. 
 
 
+## Updates you need to make next time (new RACE image, new name)
+- In VS Code, click left corner in bottom to connect to remote. Open SSH COnfiguration. Open your .\ssh\config file and update the host name.
+- Connect to remote server
+- Go to command palette (Ctrl + Shift + P). Type SAS: Update Connection Profile. Update your profile (just the name of the server).
+- Run some code, you will be asked to provide new authorization code.
+- In VS Code terminal (alternatively use MobaXterm to browse through directories in Linux and make changes to files):
+```
+su
+vi /opt/jenkins/jenkins_plus/.sas/config.json
+```
+In VI editor:
+- press I 
+- edit your text
+- press escape
+- press :wq!
+- enter 
+  
+To exit su mode:
+``` 
+exit
+```  
+
+Next we build and start Docker Jenkins Image:
+```
+cd /opt/jenkins
+docker-compose build
+docker-compose up-d
+```
+After a few moments Jenkins should be up and running on port 8080.
 
 
 ## Updates you need to make next time (new RACE image, new name)
