@@ -3,7 +3,7 @@ data test;
     set sashelp.class (obs=10);
 run;    
 
-%print;
+%printit;
 
 
 

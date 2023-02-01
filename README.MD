@@ -180,7 +180,7 @@ Plugin and profile is stored in user folder, in case of RACE this is:
 
 ## Install docker-compose
 I assume you already have Docker installed, if not you have to install Docker.
-With DOcker installed you can install Docker-compose.
+With Docker installed you can install Docker-compose.
 https://docs.docker.com/compose/install/
 
 ## Create customized docker Jenkins image
@@ -254,16 +254,70 @@ docker logs jenkins_plus
 
 ## Configure Jenkins
 
-Set up credentials  
+### Set up credentials  
+In Jenkins, go to Manage Jenkins -> Manage Credentials -> Domians -> Global -> Add Credentials.
+ID sasdemo_pw
+Password: password of sasdemo
+
+
+### Setup pipeline project  
+Go Jenkins dashboard:
+Click: + New Item -> Pipeline project -> provide name.
 
 
 
-Setup pipeline project  
+Configure pipeline:
+- Pipeline
+  -  Definition: 'Pipeline script from SCM'
+  -  SCM: 
+     -  Git
+  -  Repositories
+     -  Repository URL:
+        -  https://github.com/jangitje/viya_DataOps.git
+        -  Credentials: 
+           - -none- (this repository is public, for a private one you will need credentials) 
+         - Brach Specifier:
+           - origin/main
+        - Save
 
 
-## Required updates when working with new RACE image 
+Run your project by clicking Build (with Parameters if indicated)
+
+If successfully the build Stage View will be green. 
+After running the first time and making a successfull connection to GIT you will notice that the pipeline has changed. This is because Jenkins will take the properies from the Jenkins file in the repository. 
 
 
+
+
+## Updates you need to make next time (new RACE image, new name)
+- In VS Code, click left corner in bottom to connect to remote. Open SSH COnfiguration. Open your .\ssh\config file and update the host name.
+- Connect to remote server
+- Go to command palette (Ctrl + Shift + P). Type SAS: Update Connection Profile. Update your profile (just the name of the server).
+- Run some code, you will be asked to provide new authorization code.
+- In VS Code terminal (alternatively use MobaXterm to browse through directories in Linux and make changes to files):
+```
+su
+vi /opt/jenkins/jenkins_plus/.sas/config.json
+```
+In VI editor:
+- press I 
+- edit your text
+- press escape
+- press :wq!
+- enter 
+  
+To exit su mode:
+``` 
+exit
+```  
+
+Next we build and start Docker Jenkins Image:
+```
+cd /opt/jenkins
+docker-compose build
+docker-compose up-d
+```
+After a few moments Jenkins should be up and running on port 8080.
 
 
 
