@@ -12,7 +12,8 @@
   In batch parameter batch=1 is set by Jenkins
  */
 
- 
+ %put hello team;
+
 %macro params_interactive; 
 %global batch target target_data;
 %if "&batch" ne "1" %then %do; 
