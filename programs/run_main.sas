@@ -11,9 +11,6 @@
   Parameters interactive session
   In batch parameter batch=1 is set by Jenkins
  */
-
- %put hello team;
-
 %macro params_interactive; 
 %global batch target target_data;
 %if "&batch" ne "1" %then %do; 
@@ -38,6 +35,17 @@ options noquotelenmax ;
  Run Hello World job
  */
 %include programs(hello_world);
+
+
+/**
+ test Python
+*/
+
+proc python;
+submit;
+print("hello world")
+endsubmit;
+run;
 
 
 /**
