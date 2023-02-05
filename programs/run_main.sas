@@ -14,8 +14,8 @@
 %macro params_interactive; 
 %global batch target target_data;
 %if "&batch" ne "1" %then %do; 
-  %let target = /sascode/viya_dataOps;
-  %let target_data = /sascode/viya_dataOps;
+  %let target = /sascode/viya_DataOps;
+  %let target_data = /sascode/viya_DataOps;
 %end;
 %mend;
 %params_interactive; 
