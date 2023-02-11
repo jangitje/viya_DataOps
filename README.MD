@@ -154,7 +154,26 @@ Indeed this is the same place where your connection config is stored.
 Public key: id_rsa.pub, private key: id_rsa.
 
 The public key must be added to file  \home\sas\.ssh\authorized_keys on the remote machine.  
-Copy the content of the id_rsa.pub.  
+Two possible ways you can do this:
+-    With ssh-copy-id (preferred) 
+-    Manually (if you don't have GIT bash available in your VS Code installation)
+
+### With ssh-copy-id
+For this method you need to use the GIT bash in VS Code. When you're in the terminal of VS Code the default shell language is Powershell. You need to switch to Bash. Bash is only available if you have installed GIT LOCALLY.  You can do GIT installation from here: https://git-scm.com/downloads
+With GIT installed go to terminal, and then in right panel you see Powershell. Click 'v' button to select profile with GIT Bash. Next:
+```
+export USER_AT_HOST="sas@azureuse030XXX.race.sas.com"
+export PUBKEYPATH="$HOME/.ssh/id_rsa.pub"
+```
+Make sure you define the correct hostname and public key. Next:
+```
+ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
+```
+You need to provide your remote password.  
+You should now be able to connect to remote without providing your password.
+
+### Manually (if you can't get Bash to work)
+Copy the content of your id_rsa.pub.  
 On the remote machine (change this with your content, do't forget to quote):  
 ```
  export pubkey="ssh-rsa ***" 
@@ -174,9 +193,9 @@ chmod 700 /home/sas/.ssh && chmod 600 /home/sas/.ssh/authorized_keys
 If correctly configured, next time you connect to remote server, VS Code should not ask you anymore for credentials.
 
 ## Initialize your own GIT repository in VS Code
-Copy the content of viya_DataOpst to a new repository folder.  
-You can now change/update your content and publish this to your own repository on GITHUB.  
-  
+Go to folder on your remote that does not already have a repository.  
+Create/copy your content in this folder.  
+In left panel select Source Control button (the one with the branches).  You can initialize your repsository and publsig to github from here.
 
 ## Next time you start your RACE image
 Assuming you use RACE and save your image, next time you use your RACE image, you will have a new address.  
