@@ -26,8 +26,7 @@
  */
 filename programs "&target./programs";
 filename utils "&target./utils";
-filename fmacros "&target./macros";
-options mautosource sasautos=(fmacros);
+options mautosource sasautos=(sasautos, "&target./macros");
 options noquotelenmax ;
 
 
