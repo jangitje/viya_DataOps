@@ -29,7 +29,6 @@ pipeline {
                     temp_dir=$(uuidgen)
                     mkdir $temp_dir
                     zip -r $temp_dir/target.zip macros/* utils/* programs/* json/* deployed/*.* *.sas *.py *.properties
-                    echo $cred_viya_password
                     /root/sas-viya --insecure auth login -u sasdemo -p $cred_viya_password
                     /root/sas-viya --insecure batch jobs submit-pgm --pgm-path utils/unzip.sas --context default --file  $temp_dir/target.zip --wait-no-results --watch-output
                     rm -f $temp_dir/target.zip
@@ -39,7 +38,7 @@ pipeline {
         } 
         stage('Run Hello World') {
             steps {
-                sh '/root/sas-viya --insecure auth login -u sasdemo -p Orion123'
+                sh '/root/sas-viya --insecure auth login -u sasdemo -p $cred_viya_password'
                 sh "/root/sas-viya --insecure batch jobs submit-pgm --rem-pgm-path ${params.target}/deployed/run_main.sas --context default --wait-log-list --watch-output"
                 sh 'echo SAS output'
                 sh 'cat run_main.lst'
