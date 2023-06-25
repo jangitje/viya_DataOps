@@ -29,7 +29,8 @@ pipeline {
                     temp_dir=$(uuidgen)
                     mkdir $temp_dir
                     zip -r $temp_dir/target.zip macros/* utils/* programs/* json/* deployed/*.* *.sas *.py *.properties
-                    /root/sas-viya --insecure auth login -u sasdemo -p Orion123
+                    echo $cred_viya_password
+                    /root/sas-viya --insecure auth login -u sasdemo -p $cred_viya_password
                     /root/sas-viya --insecure batch jobs submit-pgm --pgm-path utils/unzip.sas --context default --file  $temp_dir/target.zip --wait-no-results --watch-output
                     rm -f $temp_dir/target.zip
                     rm -rf $temp_dir
