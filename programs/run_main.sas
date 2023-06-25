@@ -40,13 +40,12 @@ options noquotelenmax ;
  test Python
 */
 
-/*
 proc python;
 submit;
 print("hello world")
 endsubmit;
 run;
-*/
+
 
 /**
   Return error code
